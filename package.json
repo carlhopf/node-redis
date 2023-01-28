@@ -8,6 +8,10 @@
   "workspaces": [
     "./packages/*"
   ],
+  "files": [
+    "dist/",
+    "packages/"
+  ],
   "scripts": {
     "test": "npm run test -ws --if-present",
     "build:client": "npm run build -w ./packages/client",
