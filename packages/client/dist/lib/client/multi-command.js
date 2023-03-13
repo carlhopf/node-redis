@@ -78,17 +78,17 @@ class RedisClientMultiCommand {
         if (execAsPipeline) {
             return this.execAsPipeline();
         }
-        const commands = __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").exec();
-        if (!commands)
-            return [];
-        return __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").handleExecReplies(await __classPrivateFieldGet(this, _RedisClientMultiCommand_executor, "f").call(this, commands, __classPrivateFieldGet(this, _RedisClientMultiCommand_selectedDB, "f"), multi_command_1.default.generateChainId()));
+        return __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").handleExecReplies(await __classPrivateFieldGet(this, _RedisClientMultiCommand_executor, "f").call(this, __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").queue, __classPrivateFieldGet(this, _RedisClientMultiCommand_selectedDB, "f"), multi_command_1.default.generateChainId()));
     }
     async execAsPipeline() {
+        if (__classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").queue.length === 0)
+            return [];
         return __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").transformReplies(await __classPrivateFieldGet(this, _RedisClientMultiCommand_executor, "f").call(this, __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").queue, __classPrivateFieldGet(this, _RedisClientMultiCommand_selectedDB, "f")));
     }
 }
 exports.default = RedisClientMultiCommand;
 _RedisClientMultiCommand_multi = new WeakMap(), _RedisClientMultiCommand_executor = new WeakMap(), _RedisClientMultiCommand_selectedDB = new WeakMap(), _RedisClientMultiCommand_instances = new WeakSet(), _RedisClientMultiCommand_legacyMode = function _RedisClientMultiCommand_legacyMode() {
+    var _a, _b;
     this.v4.addCommand = this.addCommand.bind(this);
     this.addCommand = (...args) => {
         __classPrivateFieldGet(this, _RedisClientMultiCommand_multi, "f").addCommand((0, commander_1.transformLegacyCommandArguments)(args));
@@ -112,7 +112,7 @@ _RedisClientMultiCommand_multi = new WeakMap(), _RedisClientMultiCommand_executo
     };
     for (const [name, command] of Object.entries(commands_1.default)) {
         __classPrivateFieldGet(this, _RedisClientMultiCommand_instances, "m", _RedisClientMultiCommand_defineLegacyCommand).call(this, name, command);
-        this[name.toLowerCase()] = this[name];
+        (_a = this)[_b = name.toLowerCase()] ?? (_a[_b] = this[name]);
     }
 }, _RedisClientMultiCommand_defineLegacyCommand = function _RedisClientMultiCommand_defineLegacyCommand(name, command) {
     this.v4[name] = this[name].bind(this.v4);

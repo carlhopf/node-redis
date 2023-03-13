@@ -160,15 +160,14 @@ _a = RedisSocket, _RedisSocket_initiator = new WeakMap(), _RedisSocket_options =
             this.emit('ready');
         }
         catch (err) {
-            const retryIn = __classPrivateFieldGet(this, _RedisSocket_instances, "m", _RedisSocket_shouldReconnect).call(this, retries, err);
+            const retryIn = __classPrivateFieldGet(this, _RedisSocket_instances, "m", _RedisSocket_shouldReconnect).call(this, retries++, err);
             if (typeof retryIn !== 'number') {
                 throw retryIn;
             }
             this.emit('error', err);
             await (0, utils_1.promiseTimeout)(retryIn);
+            this.emit('reconnecting');
         }
-        retries++;
-        this.emit('reconnecting');
     } while (__classPrivateFieldGet(this, _RedisSocket_isOpen, "f") && !__classPrivateFieldGet(this, _RedisSocket_isReady, "f"));
 }, _RedisSocket_createSocket = function _RedisSocket_createSocket() {
     return new Promise((resolve, reject) => {
