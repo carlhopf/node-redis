@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformArguments = void 0;
+exports.transformArguments = exports.FIRST_KEY_INDEX = void 0;
 const generic_transformers_1 = require("@redis/client/dist/lib/commands/generic-transformers");
 const _1 = require(".");
+exports.FIRST_KEY_INDEX = 1;
 function transformArguments(index, schema, options) {
     const args = ['FT.CREATE', index];
     if (options?.ON) {

@@ -1,4 +1,5 @@
 import { RedisSearchLanguages, PropertyName, RediSearchSchema } from '.';
+export declare const FIRST_KEY_INDEX = 1;
 interface CreateOptions {
     ON?: 'HASH' | 'JSON';
     PREFIX?: string | Array<string>;
