@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformReply = exports.transformArguments = exports.IS_READ_ONLY = void 0;
+exports.transformReply = exports.transformArguments = exports.IS_READ_ONLY = exports.FIRST_KEY_INDEX = void 0;
 const AGGREGATE_1 = require("./AGGREGATE");
 const _1 = require(".");
+exports.FIRST_KEY_INDEX = 1;
 exports.IS_READ_ONLY = true;
 function transformArguments(index, query, options) {
     const args = ['FT.PROFILE', index, 'AGGREGATE'];

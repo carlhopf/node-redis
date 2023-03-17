@@ -1,3 +1,4 @@
+export declare const FIRST_KEY_INDEX = 1;
 interface DropIndexOptions {
     DD?: true;
 }

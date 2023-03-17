@@ -1,3 +1,4 @@
+export declare const FIRST_KEY_INDEX = 1;
 export declare function transformArguments(option: string): string[];
 interface ConfigGetReply {
     [option: string]: string | null;

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.transformReply = exports.transformArguments = exports.IS_READ_ONLY = void 0;
+exports.transformReply = exports.transformArguments = exports.IS_READ_ONLY = exports.FIRST_KEY_INDEX = void 0;
 const SEARCH_1 = require("./SEARCH");
 const _1 = require(".");
+exports.FIRST_KEY_INDEX = 1;
 exports.IS_READ_ONLY = true;
 function transformArguments(index, query, options) {
     let args = ['FT.PROFILE', index, 'SEARCH'];
