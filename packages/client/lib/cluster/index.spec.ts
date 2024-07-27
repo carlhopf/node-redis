@@ -386,4 +386,20 @@ describe('Cluster', () => {
             minimumDockerVersion: [7]
         });
     });
+
+    testUtils.testWithCluster('slotsRefreshInterval', async cluster => {
+        const slots = cluster.slots;
+        assert.ok(slots.length > 0)
+
+        // identity changes on discover/refresh
+        while(slots === cluster.slots) await new Promise(r => setTimeout(r, 20));
+
+        // slots unchanged
+        assert.deepStrictEqual(slots, cluster.slots)
+    }, {
+        ...GLOBAL.CLUSTERS.OPEN,
+        clusterConfiguration: {
+            slotsRefreshInterval: 250
+        }
+    });
 });

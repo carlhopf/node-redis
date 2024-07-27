@@ -108,6 +108,7 @@ export default class RedisClusterSlots<
     pubSubNode?: PubSubNode<M, F, S>;
 
     #isOpen = false;
+    #slotsRefreshTimer?: NodeJS.Timeout;
 
     get isOpen() {
         return this.#isOpen;
@@ -128,11 +129,19 @@ export default class RedisClusterSlots<
         }
 
         this.#isOpen = true;
+
+
         try {
             await this.#discoverWithRootNodes();
         } catch (err) {
             this.#isOpen = false;
             throw err;
+        }
+
+        if (this.#options.slotsRefreshInterval) {
+            this.#slotsRefreshTimer = setInterval(() => {
+                this.#discoverWithRootNodes().catch(err => this.#emit('error', err));
+            }, this.#options.slotsRefreshInterval)
         }
     }
 
@@ -390,6 +399,11 @@ export default class RedisClusterSlots<
 
     async #destroy(fn: (client: RedisClientType<M, F, S>) => Promise<unknown>): Promise<void> {
         this.#isOpen = false;
+
+        if (this.#slotsRefreshTimer) {
+            clearInterval(this.#slotsRefreshTimer);
+            this.#slotsRefreshTimer = undefined;
+        }
 
         const promises = [];
         for (const { master, replicas } of this.shards) {

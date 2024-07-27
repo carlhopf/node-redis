@@ -43,6 +43,10 @@ export interface RedisClusterOptions<
      */
     maxCommandRedirections?: number;
     /**
+     * Interval (milliseconds) for automatic slots refresh, disabled by default.
+     */
+    slotsRefreshInterval?: number;
+    /**
      * Mapping between the addresses in the cluster (see `CLUSTER SHARDS`) and the addresses the client should connect to
      * Useful when the cluster is running on another network
      *
